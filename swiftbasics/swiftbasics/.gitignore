@@ -1,0 +1,48 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+
+# User-specific files
+*.xcuserdatad
+*.xcscheme
+*.idea/
+*.swiftsourceinfo
+
+# Swift Package Manager
+/.build/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+*.podspec.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Playground
+timeline.xctimeline
+playground.xcworkspace
+
+# macOS
+.DS_Store
+
+# Others
+*.log
+*.tmp
+
+
+# Xcode user data
+*.xcuserdatad
+*.xcuserstate
+*.xcschememanagement.plist
