@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     let skills: [Skill] = [
-        try! Skill(name: "Java 11/17", level: 7, iconName: "cup.and.heat.waves"),
-        try! Skill(name: "Angular 13+", level: 6, iconName: "globe"),
-        try! Skill(name: "Swift", level: 2, iconName: "swift"),
-        try! Skill(name: "Python", level: 4, iconName: "lizard.circle")
+        Skill(name: "Java 11/17", level: 7, iconName: "cup.and.heat.waves"),
+        Skill(name: "Angular 13+", level: 6, iconName: "globe"),
+        Skill(name: "Swift", level: 2, iconName: "swift"),
+        Skill(name: "Python", level: 4, iconName: "lizard.circle")
     ]
-    @State var sortBy: String = "DESC"
+    @State var sortBy: SortOrder = .ascending
     
     
     var body: some View {
@@ -27,10 +27,10 @@ struct ContentView: View {
                         .font(.system(size: 50))
                         .onTapGesture {
                             withAnimation {
-                                if sortBy == "DESC" {
-                                    sortBy = "ASC"
+                                if sortBy == .descending {
+                                    sortBy = .ascending
                                 } else {
-                                    sortBy = "DESC"
+                                    sortBy = .descending
                                 }
                             }
                         }
@@ -49,15 +49,15 @@ struct ContentView: View {
                     .foregroundColor(.secondary)
                     .padding(12)
                     .background(.ultraThinMaterial)
-                    .cornerRadius(10)
+                    .clipShape(.rect(cornerRadius: 16))
                 
-                List(skills.sorted(by: getSortableBy)) { skill in
+                List(skills.sorted(by: sortedByLevel)) { skill in
                     HStack {
-                        Image(systemName: skill.iconName)
+                        Image(systemName: skill.iconName)   
                         Text(skill.name)
                         HStack{
                            Spacer()
-                            ForEach(1...skill.level, id: \.self) { num in
+                            ForEach(1...skill.level, id: \.self) { _ in
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
                             }
@@ -78,8 +78,8 @@ struct ContentView: View {
         
     }
     
-    func getSortableBy(_ a: Skill, _ b: Skill) -> Bool {
-        if sortBy == "ASC" {
+    func sortedByLevel(_ a: Skill, _ b: Skill) -> Bool {
+        if sortBy == .ascending {
             return a.level < b.level
         } else {
             return a.level > b.level

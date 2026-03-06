@@ -7,12 +7,9 @@ struct Skill: Identifiable {
     let level: Int
     let iconName: String
     
-    init(name:String, level: Int = 1, iconName: String) throws {
-        guard (1...10).contains(level) else {
-            throw InvalidLevelError(level: level)
-        }
+    init(name:String, level: Int = 1, iconName: String) {
         self.name = name
-        self.level = level
+        self.level = max(1, min(level, 10))
         self.iconName = iconName
     }
 }
