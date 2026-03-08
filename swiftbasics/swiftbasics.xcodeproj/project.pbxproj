@@ -14,6 +14,9 @@
 		547254132F59E25C00466982 /* swiftbasicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472540D2F59E25C00466982 /* swiftbasicsApp.swift */; };
 		547254182F59E32C00466982 /* SkillErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547254172F59E32600466982 /* SkillErrors.swift */; };
 		5472541B2F5B560B00466982 /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472541A2F5B560100466982 /* SortOrder.swift */; };
+		5472541D2F5B580F00466982 /* SkillRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472541C2F5B580A00466982 /* SkillRowView.swift */; };
+		5472541F2F5D71B700466982 /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472541E2F5D71B500466982 /* SkillDetailView.swift */; };
+		54FE65232F5DC544006C76F4 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE65222F5DC53F006C76F4 /* ProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		5472540D2F59E25C00466982 /* swiftbasicsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftbasicsApp.swift; sourceTree = "<group>"; };
 		547254172F59E32600466982 /* SkillErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillErrors.swift; sourceTree = "<group>"; };
 		5472541A2F5B560100466982 /* SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrder.swift; sourceTree = "<group>"; };
+		5472541C2F5B580A00466982 /* SkillRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillRowView.swift; sourceTree = "<group>"; };
+		5472541E2F5D71B500466982 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
+		54FE65222F5DC53F006C76F4 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,9 @@
 		547254042F59E19C00466982 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				54FE65222F5DC53F006C76F4 /* ProgressView.swift */,
+				5472541E2F5D71B500466982 /* SkillDetailView.swift */,
+				5472541C2F5B580A00466982 /* SkillRowView.swift */,
 				5472540B2F59E25C00466982 /* ContentView.swift */,
 			);
 			path = Views;
@@ -189,9 +198,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5472541F2F5D71B700466982 /* SkillDetailView.swift in Sources */,
 				5472541B2F5B560B00466982 /* SortOrder.swift in Sources */,
 				547254182F59E32C00466982 /* SkillErrors.swift in Sources */,
 				547254112F59E25C00466982 /* ContentView.swift in Sources */,
+				5472541D2F5B580F00466982 /* SkillRowView.swift in Sources */,
+				54FE65232F5DC544006C76F4 /* ProgressView.swift in Sources */,
 				547254122F59E25C00466982 /* Skill.swift in Sources */,
 				547254132F59E25C00466982 /* swiftbasicsApp.swift in Sources */,
 			);
