@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkillDetailView: View {
-    var skill: Skill
+    @Binding var skill: Skill
     
     var body: some View {
         ZStack{
@@ -36,15 +36,23 @@ struct SkillDetailView: View {
                 }
                 Text(skill.name)
                     .font(.largeTitle)
-                HStack{
-                    ForEach(1...skill.level, id: \.self) { _ in
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .font(.system(size: 31))
+                VStack(spacing: 30){
+                    HStack{
+                        ForEach(1...skill.level, id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                                .font(.system(size: 31))
+                        }
                     }
+                    SkillProgressView(progress: skill.level)
+                        .padding(10)
+                    Stepper("Level: \(skill.level)", value: $skill.level, in: 0...7)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                        .foregroundColor(.white)
                 }
-                SkillProgressView(progress: skill.level)
-                    .padding(10)
+               
+                
                 Spacer()
             }
         }
@@ -54,11 +62,11 @@ struct SkillDetailView: View {
 
 
 #Preview {
-    SkillDetailView(
-        skill: Skill(
-            name: "Swift",
-            level: 3,
-            iconName: "swift"
-        )
+    @State @Previewable var previewSkill = Skill(
+        name: "Swift",
+        level: 3,
+        iconName: "swift"
     )
+
+    SkillDetailView(skill: $previewSkill)
 }

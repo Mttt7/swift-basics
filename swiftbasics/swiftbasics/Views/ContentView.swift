@@ -52,9 +52,11 @@ struct ContentView: View {
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: 16))
                     
-                    List(skills.sorted(by: sortedByLevel)) { skill in
-                        NavigationLink(destination: SkillDetailView(skill: skill)) {
-                            SkillRowView(skill: skill)
+                    List {
+                        ForEach(sortedIndices, id: \.self) { index in
+                            NavigationLink(destination: SkillDetailView(skill: $skills[index])) {
+                                SkillRowView(skill: $skills[index])
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -69,12 +71,13 @@ struct ContentView: View {
         }
     }
     
-    
-    func sortedByLevel(_ a: Skill, _ b: Skill) -> Bool {
-        if sortBy == .ascending {
-            return a.level < b.level
-        } else {
-            return a.level > b.level
+    var sortedIndices: [Int] {
+        skills.indices.sorted { a, b in
+            if sortBy == .ascending {
+                return skills[a].level < skills[b].level
+            } else {
+                return skills[a].level > skills[b].level
+            }
         }
     }
     

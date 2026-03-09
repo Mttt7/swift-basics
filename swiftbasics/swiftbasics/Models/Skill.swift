@@ -3,9 +3,9 @@ import Foundation
 
 struct Skill: Identifiable {
     var id = UUID()
-    let name: String
-    let level: Int
-    let iconName: String
+    var name: String
+    var level: Int
+    var iconName: String
     
     init(name:String, level: Int = 1, iconName: String) {
         self.name = name
