@@ -46,7 +46,7 @@ struct SkillDetailView: View {
                     }
                     SkillProgressView(progress: skill.level)
                         .padding(10)
-                    Stepper("Level: \(skill.level)", value: $skill.level, in: 0...7)
+                    Stepper("Level: \(skill.level)", value: $skill.level, in: 1...7)
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                         .foregroundColor(.white)

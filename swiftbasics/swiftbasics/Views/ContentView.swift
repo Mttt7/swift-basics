@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var vm = SkillsViewModel()
-    
+    @EnvironmentObject var vm: SkillsViewModel
     
     var body: some View {
         NavigationStack{
@@ -85,4 +84,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(SkillsViewModel())
 }

@@ -1,5 +1,5 @@
 import Foundation
-internal import Combine
+import Combine
 
 
 final class SkillsViewModel: ObservableObject {
@@ -8,7 +8,9 @@ final class SkillsViewModel: ObservableObject {
         Skill(name: "Angular 13+", level: 6, iconName: "globe"),
         Skill(name: "Swift", level: 2, iconName: "swift"),
         Skill(name: "Python", level: 4, iconName: "lizard.circle")
-    ]
+    ] {
+        didSet { applySort() }
+    }
 
     // private(set) = getter publiczny, setter prywatny
     // analogia Java: publiczny getter + prywatny setter

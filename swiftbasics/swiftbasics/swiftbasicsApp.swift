@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct swiftbasicsApp: App {
+    @StateObject var vm = SkillsViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(vm)
         }
     }
 }
