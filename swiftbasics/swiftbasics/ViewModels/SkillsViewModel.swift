@@ -3,12 +3,7 @@ import Combine
 
 
 final class SkillsViewModel: ObservableObject {
-    @Published var skills: [Skill] = [
-        Skill(name: "Java 11/17", level: 7, iconName: "cup.and.heat.waves"),
-        Skill(name: "Angular 13+", level: 6, iconName: "globe"),
-        Skill(name: "Swift", level: 2, iconName: "swift"),
-        Skill(name: "Python", level: 4, iconName: "lizard.circle")
-    ] {
+    @Published var skills: [Skill] = [] {
         didSet {
             applySort()
             saveSkillsToUserDefaults()
@@ -28,18 +23,27 @@ final class SkillsViewModel: ObservableObject {
         didSet { applySort() }
     }
 
+    private enum Keys {
+        static let skills = "skills.v1"
+    }
+    
     init(skills: [Skill]? = nil, sortOrder: SortOrder = .ascending) {
-        if let skills {
-            self.skills = skills
-        }
-        
+        // 1. domyślne skille jako fallback
+        self.skills = getDefaultSkills()
+        // 2. UserDefaults nadpisuje domyślne (zapisane dane użytkownika)
         if let savedSkills = loadSkillsFromUserDefaults() {
             self.skills = savedSkills
         }
-        
+        // 3. argument z init ma najwyższy priorytet (np. w testach)
+        if let skills {
+            self.skills = skills
+        }
         self.sortOrder = sortOrder
-        // pierwsze sortowanie przy tworzeniu ViewModelu
         applySort()
+    }
+    
+    public func reset() {
+        skills = getDefaultSkills() // didSet automatycznie woła applySort() i saveSkillsToUserDefaults()
     }
 
     // private - nikt spoza klasy nie może wywołać tej metody bezpośrednio
@@ -50,13 +54,27 @@ final class SkillsViewModel: ObservableObject {
         }
     }
     
-    private func saveSkillsToUserDefaults(){
-        let encoded = try? JSONEncoder().encode(self.skills) // przekazac tu skill czy self.skills? jaka roznica -> żadna
-        UserDefaults.standard.set(encoded, forKey: "skills")
+    private func saveSkillsToUserDefaults() {
+        let encoded = try? JSONEncoder().encode(self.skills)
+        UserDefaults.standard.set(encoded, forKey: Keys.skills)
     }
     
     private func loadSkillsFromUserDefaults() -> [Skill]? {
-        guard let data = UserDefaults.standard.data(forKey: "skills") else { return nil }
-        return try? JSONDecoder().decode([Skill].self, from: data)
+        guard let data = UserDefaults.standard.data(forKey: Keys.skills) else { return nil }
+        do {
+            return try JSONDecoder().decode([Skill].self, from: data)
+        } catch {
+            print("Błąd dekodowania skillów: \(error)")
+            return nil
+        }
+    }
+    
+    private func getDefaultSkills() -> [Skill] {
+        return [
+            Skill(name: "Java 11/17", level: 7, iconName: "cup.and.heat.waves"),
+            Skill(name: "Angular 13+", level: 6, iconName: "globe"),
+            Skill(name: "Swift", level: 2, iconName: "swift"),
+            Skill(name: "Python", level: 4, iconName: "lizard.circle")
+        ]
     }
 }

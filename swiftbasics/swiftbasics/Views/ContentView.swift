@@ -45,6 +45,19 @@ struct ContentView: View {
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: 16))
                     
+                    Button {
+                        vm.reset()
+                    } label: {
+                        Label("Reset", systemImage: "arrow.counterclockwise")
+                            .font(.subheadline.weight(.semibold))
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .background(.ultraThinMaterial)
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    
                     List {
                         // ForEach iteruje po KOPII tablicy sortedSkills
                         // Skill to struct (typ wartościowy) - każde "skill" w pętli to kopia
