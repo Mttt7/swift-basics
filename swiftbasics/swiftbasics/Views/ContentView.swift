@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var skills: [Skill] = [
-        Skill(name: "Java 11/17", level: 7, iconName: "cup.and.heat.waves"),
-        Skill(name: "Angular 13+", level: 6, iconName: "globe"),
-        Skill(name: "Swift", level: 2, iconName: "swift"),
-        Skill(name: "Python", level: 4, iconName: "lizard.circle")
-    ]
-    @State var sortBy: SortOrder = .ascending
+    @StateObject private var vm = SkillsViewModel()
     
     
     var body: some View {
@@ -28,10 +22,10 @@ struct ContentView: View {
                             .font(.system(size: 50))
                             .onTapGesture {
                                 withAnimation {
-                                    if sortBy == .descending {
-                                        sortBy = .ascending
+                                    if vm.sortOrder == .descending {
+                                        vm.sortOrder = .ascending
                                     } else {
-                                        sortBy = .descending
+                                        vm.sortOrder = .descending
                                     }
                                 }
                             }
@@ -53,9 +47,15 @@ struct ContentView: View {
                         .clipShape(.rect(cornerRadius: 16))
                     
                     List {
-                        ForEach(sortedIndices, id: \.self) { index in
-                            NavigationLink(destination: SkillDetailView(skill: $skills[index])) {
-                                SkillRowView(skill: $skills[index])
+                        // ForEach iteruje po KOPII tablicy sortedSkills
+                        // Skill to struct (typ wartościowy) - każde "skill" w pętli to kopia
+                        // analogia Java: jak iterowanie po liście prymitywów, nie referencji
+                        ForEach(vm.sortedSkills) { skill in
+                            // binding(for:) jest potrzebny bo "skill" to kopia
+                            // musimy znaleźć ORYGINAŁ w vm.skills po id
+                            // żeby zmiany w SkillDetailView trafiły z powrotem do ViewModelu
+                            NavigationLink(destination: SkillDetailView(skill: binding(for: skill))) {
+                                SkillRowView(skill: skill)
                             }
                         }
                     }
@@ -63,7 +63,7 @@ struct ContentView: View {
                     .scrollContentBackground(.hidden)
                     .cornerRadius(20)
                     .scrollDisabled(true)
-                    .frame(height: CGFloat(skills.count) * 52)
+                    .frame(height: CGFloat(vm.skills.count) * 52)
                     
                 }
                 .padding()
@@ -71,14 +71,14 @@ struct ContentView: View {
         }
     }
     
-    var sortedIndices: [Int] {
-        skills.indices.sorted { a, b in
-            if sortBy == .ascending {
-                return skills[a].level < skills[b].level
-            } else {
-                return skills[a].level > skills[b].level
-            }
+    // Binding to "most" między kopią struct a oryginalnym miejscem w pamięci
+    // szukamy oryginału po id, zwracamy referencję ($vm.skills[index])
+    // gdyby Skill był class (typ referencyjny) jak w Javie - ta funkcja nie byłaby potrzebna
+    func binding(for skill: Skill) -> Binding<Skill> {
+        guard let index = vm.skills.firstIndex(where: { $0.id == skill.id }) else {
+            fatalError("Skill not found")
         }
+        return $vm.skills[index]
     }
     
 }

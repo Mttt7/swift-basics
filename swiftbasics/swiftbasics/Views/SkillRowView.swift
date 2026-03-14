@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkillRowView : View {
-    @Binding var skill: Skill
+    var skill: Skill
     
     var body: some View {
         HStack {
