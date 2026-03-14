@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var vm: SkillsViewModel
+    @State private var showResetAlert = false
     
     var body: some View {
         NavigationStack{
@@ -45,19 +46,6 @@ struct ContentView: View {
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: 16))
                     
-                    Button {
-                        vm.reset()
-                    } label: {
-                        Label("Reset", systemImage: "arrow.counterclockwise")
-                            .font(.subheadline.weight(.semibold))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(.ultraThinMaterial)
-                            .foregroundColor(.white)
-                            .clipShape(Capsule())
-                    }
-                    .buttonStyle(.plain)
-                    
                     List {
                         // ForEach iteruje po KOPII tablicy sortedSkills
                         // Skill to struct (typ wartościowy) - każde "skill" w pętli to kopia
@@ -79,6 +67,31 @@ struct ContentView: View {
                     
                 }
                 .padding()
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        showResetAlert = true
+                    } label: {
+                        Label("Reset", systemImage: "arrow.counterclockwise")
+                    }
+                    .tint(.white)
+                    
+                    Button {
+                        // TODO
+                    } label: {
+                        Label("Dodaj", systemImage: "plus")
+                    }
+                    .tint(.white)
+                }
+            }
+            .alert("Reset poziomów", isPresented: $showResetAlert) {
+                Button("Anuluj", role: .cancel) { }
+                Button("Reset", role: .destructive) {
+                    vm.reset()  // wykonuje się tylko po potwierdzeniu
+                }
+            } message: {
+                Text("Czy na pewno chcesz zresetować wszystkie poziomy?")
             }
         }
     }
