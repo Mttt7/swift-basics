@@ -1,19 +1,13 @@
-//
-//  ContentView.swift
-//  swiftbasics
-//
-//  Created by Michał on 05/03/2026.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var vm: SkillsViewModel
     @State private var showResetAlert = false
-    
+    @State private var showAddSheet = false
+
     var body: some View {
-        NavigationStack{
-            ZStack{
+        NavigationStack {
+            ZStack {
                 Color.blue
                     .ignoresSafeArea()
                 VStack(spacing: 12) {
@@ -36,8 +30,7 @@ struct ContentView: View {
                             .font(.largeTitle)
                             .foregroundColor(.primary)
                     }
-                    
-                    
+
                     Text("IOS developer in progress")
                         .fontDesign(.rounded)
                         .fontWeight(.medium)
@@ -45,7 +38,7 @@ struct ContentView: View {
                         .padding(12)
                         .background(.ultraThinMaterial)
                         .clipShape(.rect(cornerRadius: 16))
-                    
+
                     List {
                         // ForEach iteruje po KOPII tablicy sortedSkills
                         // Skill to struct (typ wartościowy) - każde "skill" w pętli to kopia
@@ -64,7 +57,6 @@ struct ContentView: View {
                     .cornerRadius(20)
                     .scrollDisabled(true)
                     .frame(height: CGFloat(vm.skills.count) * 52)
-                    
                 }
                 .padding()
             }
@@ -76,9 +68,9 @@ struct ContentView: View {
                         Label("Reset", systemImage: "arrow.counterclockwise")
                     }
                     .tint(.white)
-                    
+
                     Button {
-                        // TODO
+                        showAddSheet = true
                     } label: {
                         Label("Dodaj", systemImage: "plus")
                     }
@@ -88,14 +80,18 @@ struct ContentView: View {
             .alert("Reset poziomów", isPresented: $showResetAlert) {
                 Button("Anuluj", role: .cancel) { }
                 Button("Reset", role: .destructive) {
-                    vm.reset()  // wykonuje się tylko po potwierdzeniu
+                    vm.reset()
                 }
             } message: {
                 Text("Czy na pewno chcesz zresetować wszystkie poziomy?")
             }
+            .sheet(isPresented: $showAddSheet) {
+                AddSkillView()
+                    .environmentObject(vm)
+            }
         }
     }
-    
+
     // Binding to "most" między kopią struct a oryginalnym miejscem w pamięci
     // szukamy oryginału po id, zwracamy referencję ($vm.skills[index])
     // gdyby Skill był class (typ referencyjny) jak w Javie - ta funkcja nie byłaby potrzebna
@@ -105,7 +101,6 @@ struct ContentView: View {
         }
         return $vm.skills[index]
     }
-    
 }
 
 #Preview {

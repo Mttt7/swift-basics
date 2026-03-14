@@ -45,6 +45,11 @@ final class SkillsViewModel: ObservableObject {
     public func reset() {
         skills = getDefaultSkills() // didSet automatycznie woła applySort() i saveSkillsToUserDefaults()
     }
+    
+    public func addSkill(name: String, level: Int, iconName: String) {
+        let newSkill = Skill(name: name.trimmingCharacters(in: .whitespaces), level: level, iconName: iconName)
+        skills.append(newSkill) // didSet automatycznie woła applySort() i saveSkillsToUserDefaults()
+    }
 
     // private - nikt spoza klasy nie może wywołać tej metody bezpośrednio
     // jedyna droga zmiany sortedSkills prowadzi przez zmianę sortOrder
