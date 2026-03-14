@@ -9,7 +9,10 @@ final class SkillsViewModel: ObservableObject {
         Skill(name: "Swift", level: 2, iconName: "swift"),
         Skill(name: "Python", level: 4, iconName: "lizard.circle")
     ] {
-        didSet { applySort() }
+        didSet {
+            applySort()
+            saveSkillsToUserDefaults()
+        }
     }
 
     // private(set) = getter publiczny, setter prywatny
@@ -29,6 +32,11 @@ final class SkillsViewModel: ObservableObject {
         if let skills {
             self.skills = skills
         }
+        
+        if let savedSkills = loadSkillsFromUserDefaults() {
+            self.skills = savedSkills
+        }
+        
         self.sortOrder = sortOrder
         // pierwsze sortowanie przy tworzeniu ViewModelu
         applySort()
@@ -40,5 +48,15 @@ final class SkillsViewModel: ObservableObject {
         sortedSkills = skills.sorted { a, b in
             sortOrder == .ascending ? a.level < b.level : a.level > b.level
         }
+    }
+    
+    private func saveSkillsToUserDefaults(){
+        let encoded = try? JSONEncoder().encode(self.skills) // przekazac tu skill czy self.skills? jaka roznica -> żadna
+        UserDefaults.standard.set(encoded, forKey: "skills")
+    }
+    
+    private func loadSkillsFromUserDefaults() -> [Skill]? {
+        guard let data = UserDefaults.standard.data(forKey: "skills") else { return nil }
+        return try? JSONDecoder().decode([Skill].self, from: data)
     }
 }

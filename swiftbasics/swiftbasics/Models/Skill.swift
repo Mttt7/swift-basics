@@ -1,7 +1,7 @@
 import Foundation
 
 
-struct Skill: Identifiable {
+struct Skill: Identifiable, Codable {
     var id = UUID()
     var name: String
     var level: Int
