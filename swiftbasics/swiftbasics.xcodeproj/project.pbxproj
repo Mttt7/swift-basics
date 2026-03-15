@@ -18,7 +18,7 @@
 		5472541F2F5D71B700466982 /* SkillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472541E2F5D71B500466982 /* SkillDetailView.swift */; };
 		54FE65232F5DC544006C76F4 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE65222F5DC53F006C76F4 /* ProgressView.swift */; };
 		54FE65252F5F4693006C76F4 /* SkillsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE65242F5F468E006C76F4 /* SkillsViewModel.swift */; };
-		54FE65272F65CA25006C76F4 /* AddSkillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE65262F65CA22006C76F4 /* AddSkillView.swift */; };
+		54FE65272F65CA25006C76F4 /* SkiilFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FE65262F65CA22006C76F4 /* SkiilFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +34,7 @@
 		5472541E2F5D71B500466982 /* SkillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillDetailView.swift; sourceTree = "<group>"; };
 		54FE65222F5DC53F006C76F4 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		54FE65242F5F468E006C76F4 /* SkillsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsViewModel.swift; sourceTree = "<group>"; };
-		54FE65262F65CA22006C76F4 /* AddSkillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSkillView.swift; sourceTree = "<group>"; };
+		54FE65262F65CA22006C76F4 /* SkiilFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkiilFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 		547254042F59E19C00466982 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54FE65262F65CA22006C76F4 /* AddSkillView.swift */,
+				54FE65262F65CA22006C76F4 /* SkiilFormView.swift */,
 				54FE65222F5DC53F006C76F4 /* ProgressView.swift */,
 				5472541E2F5D71B500466982 /* SkillDetailView.swift */,
 				5472541C2F5B580A00466982 /* SkillRowView.swift */,
@@ -208,7 +208,7 @@
 				5472541B2F5B560B00466982 /* SortOrder.swift in Sources */,
 				547254182F59E32C00466982 /* SkillErrors.swift in Sources */,
 				547254112F59E25C00466982 /* ContentView.swift in Sources */,
-				54FE65272F65CA25006C76F4 /* AddSkillView.swift in Sources */,
+				54FE65272F65CA25006C76F4 /* SkiilFormView.swift in Sources */,
 				5472541D2F5B580F00466982 /* SkillRowView.swift in Sources */,
 				54FE65252F5F4693006C76F4 /* SkillsViewModel.swift in Sources */,
 				54FE65232F5DC544006C76F4 /* ProgressView.swift in Sources */,

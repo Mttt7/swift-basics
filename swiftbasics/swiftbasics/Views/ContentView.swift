@@ -3,7 +3,8 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var vm: SkillsViewModel
     @State private var showResetAlert = false
-    @State private var showAddSheet = false
+    @State private var showSkillForm = false
+    @State private var skillToEdit: Skill? = nil
 
     var body: some View {
         NavigationStack {
@@ -50,6 +51,22 @@ struct ContentView: View {
                             NavigationLink(destination: SkillDetailView(skill: binding(for: skill))) {
                                 SkillRowView(skill: skill)
                             }
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive){
+                                    vm.removeSkill(skill)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    skillToEdit = skill
+                                    showSkillForm = true
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                                .tint(.orange)
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -57,6 +74,7 @@ struct ContentView: View {
                     .cornerRadius(20)
                     .scrollDisabled(true)
                     .frame(height: CGFloat(vm.skills.count) * 52)
+                    
                 }
                 .padding()
             }
@@ -70,7 +88,7 @@ struct ContentView: View {
                     .tint(.white)
 
                     Button {
-                        showAddSheet = true
+                        showSkillForm = true
                     } label: {
                         Label("Dodaj", systemImage: "plus")
                     }
@@ -85,8 +103,10 @@ struct ContentView: View {
             } message: {
                 Text("Czy na pewno chcesz zresetować wszystkie poziomy?")
             }
-            .sheet(isPresented: $showAddSheet) {
-                AddSkillView()
+            .sheet(isPresented: $showSkillForm, onDismiss: {
+                skillToEdit = nil  // wyzeruj po zamknięciu żeby następne otwarcie był trybem dodawania
+            }) {
+                SkiilFormView(skillToedit: skillToEdit)
                     .environmentObject(vm)
             }
         }

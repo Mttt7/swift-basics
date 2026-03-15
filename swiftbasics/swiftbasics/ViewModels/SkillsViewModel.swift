@@ -50,6 +50,19 @@ final class SkillsViewModel: ObservableObject {
         let newSkill = Skill(name: name.trimmingCharacters(in: .whitespaces), level: level, iconName: iconName)
         skills.append(newSkill) // didSet automatycznie woła applySort() i saveSkillsToUserDefaults()
     }
+    
+    public func removeSkill(_ skill: Skill) {
+        skills.removeAll { $0.id == skill.id }
+    }
+    
+    public func updateSkill(_ skill: Skill, newName: String, newLevel: Int, newIconName: String) {
+        guard let index = skills.firstIndex(where: { $0.id == skill.id }) else { return }
+        var updatedSkill = skill
+        updatedSkill.name = newName.trimmingCharacters(in: .whitespaces)
+        updatedSkill.level = newLevel
+        updatedSkill.iconName = newIconName
+        skills[index] = updatedSkill // didSet automatycznie woła applySort() i saveSkillsToUserDefaults()
+    }
 
     // private - nikt spoza klasy nie może wywołać tej metody bezpośrednio
     // jedyna droga zmiany sortedSkills prowadzi przez zmianę sortOrder

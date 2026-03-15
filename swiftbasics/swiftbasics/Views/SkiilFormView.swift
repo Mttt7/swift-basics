@@ -1,12 +1,13 @@
 import SwiftUI
 
-struct AddSkillView: View {
+struct SkiilFormView: View {
     @EnvironmentObject var vm: SkillsViewModel
     @Environment(\.dismiss) var dismiss
     
     @State private var name: String = ""
     @State private var level: Int = 1
     @State private var iconName = "swift"
+    @State private var skillToEdit: Skill? = nil
     
     let icons = [
         ("swift", "Swift"),
@@ -21,6 +22,15 @@ struct AddSkillView: View {
     
     var isFormValid: Bool {
         !name.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    init(skillToedit: Skill? = nil) {
+        if(skillToedit != nil){
+            self.skillToEdit = skillToedit!
+            _name = State(initialValue: skillToedit!.name)
+            _level = State(initialValue: skillToedit!.level)
+            _iconName = State(initialValue: skillToedit!.iconName)
+        }
     }
     
     var body: some View {
@@ -42,7 +52,11 @@ struct AddSkillView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Zapisz") {
-                        vm.addSkill(name: name, level: level, iconName: iconName)
+                        if(skillToEdit != nil) {
+                            vm.updateSkill(skillToEdit!, newName: name, newLevel: level, newIconName: iconName)
+                        } else {
+                            vm.addSkill(name: name, level: level, iconName: iconName)
+                        }
                         dismiss()
                     }
                     .disabled(!isFormValid)
@@ -53,6 +67,6 @@ struct AddSkillView: View {
 }
 
 #Preview {
-    AddSkillView()
+    SkiilFormView()
         .environmentObject(SkillsViewModel())
 }
